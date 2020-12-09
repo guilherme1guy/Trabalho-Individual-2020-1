@@ -20,7 +20,7 @@ matrix:
         - bundle exec rails test
         
     - language: node.js
-      node_js: 15
+      node_js: 14
       cache: yarn
       before_install:
         - cd client
