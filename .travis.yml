@@ -1,0 +1,31 @@
+
+services:
+  - postgresql
+
+matrix:
+  include:
+    
+    - language: ruby
+      rvm:
+        - 2.5.7
+      before_install:
+        - cd api
+        - gem install bundler:2.1.4
+      install:
+        - bundle install
+      before_script:
+        - rake db:create
+        - rake db:migrate
+      script:
+        - bundle exec rails test
+        
+    - language: node.js
+      node_js: 15
+      cache: yarn
+      before_install:
+        - cd client
+      install:
+        - yarn install
+      script:
+        - yarn test:unit
+        - yarn lint
