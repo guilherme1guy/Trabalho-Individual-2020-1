@@ -2,30 +2,46 @@
 services:
   - postgresql
 
-matrix:
+#env:
+ # global:
+  #  - CC_TEST_REPORTER_ID=THIS_VAR_IS_SET_ON_TRAVIS_GUI
+  #  - CODECOV_TOKEN=THIS_VAR_IS_SET_ON_TRAVIS_GUI
+  
+jobs:
   include:
     
     - language: ruby
+      name: "API (Ruby)" 
       rvm:
         - 2.5.7
+      cache: bundler
       before_install:
         - cd api
-        - gem install bundler:2.1.4
+        - gem install bundler:2.1.4 rspec:3.10.0
       install:
         - bundle install
       before_script:
         - rake db:create
         - rake db:migrate
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
       script:
         - bundle exec rails test
-        
+      after_script:
+        - ./cc-test-reporter after-build -t simplecov --exit-code $TRAVIS_TEST_RESULT
+
     - language: node.js
+      name: "Client (Node.JS)"
       node_js: 14
       cache: yarn
       before_install:
         - cd client
       install:
         - yarn install
+        - yarn add codecov@3.8.1
       script:
         - yarn test:unit
         - yarn lint
+      after_success:
+        - codecov
