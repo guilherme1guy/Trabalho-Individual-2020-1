@@ -22,7 +22,7 @@ describe('AddProfileFab.vue', () => {
   })
 
   it('is a vue instance', () => {
-    expect(wrapper.isVueInstance()).toBeTruthy()
+    expect(!wrapper.isVueInstance()).toBeTruthy()
   }),
 
   it('should open a dialog when btn is clicked', () => {
