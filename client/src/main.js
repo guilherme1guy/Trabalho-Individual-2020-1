@@ -6,6 +6,8 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
+// a good js commit
+
 new Vue({
   router,
   store,
