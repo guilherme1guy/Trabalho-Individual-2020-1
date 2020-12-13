@@ -24,6 +24,18 @@ jobs:
         - rake db:migrate
       script:
         - bundle exec rails test
+      before_deploy:
+        - cd ..
+      deploy:
+        - provider: script
+          script: bash init_heroku_deploy.sh api_hom
+          on:
+            branch: develop
+        
+        - provider: script
+          script: bash init_heroku_deploy.sh api_prod
+          on:
+            branch: master
 
     - language: node.js
       name: "Client (Node.JS)"
@@ -36,6 +48,18 @@ jobs:
         - yarn add codecov@3.8.1
       script:
         - yarn test:unit
-        - yarn lint
+        - yarn lint --no-fix
       after_success:
         - codecov
+      before_deploy:
+        - cd ..
+      deploy:
+        - provider: script
+          script: bash init_heroku_deploy.sh client_hom
+          on:
+            branch: develop
+        
+        - provider: script
+          script: bash init_heroku_deploy.sh client_prod
+          on:
+            branch: master
