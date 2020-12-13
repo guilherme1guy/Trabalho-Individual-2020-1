@@ -4,7 +4,6 @@ services:
 
 #env:
  # global:
-  #  - CC_TEST_REPORTER_ID=THIS_VAR_IS_SET_ON_TRAVIS_GUI
   #  - CODECOV_TOKEN=THIS_VAR_IS_SET_ON_TRAVIS_GUI
   
 jobs:
@@ -23,13 +22,8 @@ jobs:
       before_script:
         - rake db:create
         - rake db:migrate
-        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        - chmod +x ./cc-test-reporter
-        - ./cc-test-reporter before-build
       script:
         - bundle exec rails test
-      after_script:
-        - ./cc-test-reporter after-build -t simplecov --exit-code $TRAVIS_TEST_RESULT
 
     - language: node.js
       name: "Client (Node.JS)"
