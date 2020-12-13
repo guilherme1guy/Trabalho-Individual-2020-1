@@ -1,0 +1,9 @@
+fixes:
+  - "app/::api/app/"
+  - "test/::api/test/"
+
+coverage:
+  status:
+    project:
+      default:
+        target: auto
