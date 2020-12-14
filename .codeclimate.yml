@@ -1,0 +1,23 @@
+plugins:
+
+  brakeman:
+    enabled: true
+    config:
+        app_path: api/
+
+  eslint:
+    enabled: true
+
+  flog:
+    enabled: true
+    config:
+      score_threshold: 20.0
+
+  nodesecurity:
+    enabled: true
+
+  reek:
+    enabled: true
+
+  rubocop:
+    enabled: true
